@@ -11,8 +11,9 @@ int main(void)
 	int ret = -1;
 	char writebuf[20] = "IloveLinux";
 	char buf[100] = {0};
+	
 	 
-	fd = open("a.txt", O_RDONLY);
+	fd = open("a.txt", O_RDWR | O_TRUNC);
 	if (fd == -1)
 	{
 		printf("file open error.\n");
@@ -22,7 +23,7 @@ int main(void)
 		printf("file open success.\n");
 	}
 
-
+	#if 0
         ret = write(fd, writebuf, strlen(writebuf));
 
 	if (ret < 0)
@@ -46,6 +47,7 @@ int main(void)
 		printf("read %d chars.\n", ret);
 		printf("file contett:[ %s ]\n",buf);
 	}
+	#endif
 
 	close(fd);
 	return 0;
