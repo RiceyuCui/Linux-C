@@ -13,7 +13,7 @@ int main(void)
 	char buf[100] = {0};
 	
 	 
-	fd = open("a.txt", O_RDWR | O_APPEND);
+	fd = open("a.txt", O_RDWR | O_APPEND | O_TRUNC);
 	if (fd == -1)
 	{
 		printf("file open error.\n");
