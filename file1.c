@@ -23,7 +23,7 @@ int main(void)
 		printf("file open success.\n");
 	}
 
-	#if 0
+	#if 1
         ret = write(fd, writebuf, strlen(writebuf));
 
 	if (ret < 0)
@@ -35,7 +35,9 @@ int main(void)
 		printf("write success. write %d chars.\n", ret);
 		
 	}
+	#endif
 
+	#if 0
 	ret = read(fd, buf, 20);
 	
 	if (ret < 0)
