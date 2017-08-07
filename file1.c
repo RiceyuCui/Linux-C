@@ -9,10 +9,10 @@ int main(void)
 {
 	int fd = -1;
 	int ret = -1;
-	char writebuf[20] = "hello";
+	char writebuf[20] = "IloveLinux";
 	char buf[100] = {0};
 	 
-	fd = open("a.txt", O_RDWR);
+	fd = open("a.txt", O_RDONLY);
 	if (fd == -1)
 	{
 		printf("file open error.\n");
@@ -35,7 +35,7 @@ int main(void)
 		
 	}
 
-	ret = read(fd, buf, 5);
+	ret = read(fd, buf, 20);
 	
 	if (ret < 0)
 	{
