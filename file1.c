@@ -13,22 +13,27 @@ int main(void)
 	char buf[100] = {0};
 	
 	 
-	fd = open("a.txt", O_RDWR | O_APPEND | O_TRUNC);
+	fd = open("a.txt", O_RDWR);
 	if (fd == -1)
 	{
-		printf("file open error.\n");
+		perror("file open error");
+		_exit(-1);
 	}
 	else
 	{
 		printf("file open success.\n");
 	}
-
-	#if 1
+	
+	
+	ret = lseek(fd, 3, SEEK_SET);
+	printf("lseek, ret = %d.\n", ret);
+	#if 0
         ret = write(fd, writebuf, strlen(writebuf));
 
 	if (ret < 0)
 	{
 		printf("write error.\n");
+		_exit(-1);
 	}
 	else
 	{
@@ -37,12 +42,13 @@ int main(void)
 	}
 	#endif
 
-	#if 0
+	#if 1
 	ret = read(fd, buf, 20);
 	
 	if (ret < 0)
 	{
 		printf("read error.\n");
+		_exit(-1);
 	}
 	else
 	{
@@ -53,4 +59,5 @@ int main(void)
 
 	close(fd);
 	return 0;
+	//exit(0);
 }
