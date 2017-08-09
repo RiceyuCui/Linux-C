@@ -6,30 +6,33 @@
 #include <string.h>
 
 
-int main (int argc, char *argv[])
+int cal_len(const char *pathname)
 {
 	int fd = -1;
-	int ret = -1;
+        int ret = -1;
+	
+	fd = open(pathname, O_RDONLY);
+
+        if (-1 == fd)
+        {
+                perror("file open error.\n");
+                return(-1);
+        }
+
+	ret = lseek(fd, 0, SEEK_END);
+
+	return ret;
+}
+int main (int argc, char *argv[])
+{
 	if (argc != 2)
 	{
 		printf("usage : %s filename.\n", argv[0]);
 		_exit(-1);
 	}
 
-	fd = open(argv[1], O_RDONLY);
 	
-	if (-1 == fd)
-	{
-		perror("file open error.\n");
-		_exit(-1);
-	}
-	else
-	{
-		printf("file open success. fd = %d.\n", fd);
-	}
-
-	ret = lseek(fd, 0, SEEK_END);
-	printf("file len: %d chars.\n", ret);
+	printf("file len: %d chars.\n", cal_len(argv[1]));
 
 	return 0;
 }
