@@ -14,8 +14,8 @@ int main(void)
 	char buf[100] = {0};
 	
 	 
-	fd1 = open("a.txt", O_RDWR);
-	fd2 = open("a.txt", O_RDWR);
+	fd1 = open("a.txt", O_RDWR | O_TRUNC | O_CREAT | O_APPEND, 0666);
+	fd2 = open("a.txt", O_RDWR | O_TRUNC | O_CREAT | O_APPEND, 0666);
 	if( (fd1 == -1) || (fd2 == -1))
 	{
 		perror("file open error");
@@ -23,22 +23,41 @@ int main(void)
 	}
 	
 	
-	#if 0
-        ret = write(fd, writebuf, strlen(writebuf));
+	#if 1
 
-	if (ret < 0)
+	while (1)
 	{
-		printf("write error.\n");
-		_exit(-1);
-	}
-	else
-	{
-		printf("write success. write %d chars.\n", ret);
+	        ret = write(fd1, "ab",2);
+
+		if (ret < 0)
+		{
+			printf("write error.\n");
+			_exit(-1);
+		}
+		else
+		{
+			printf("fd1 write success. write %d chars.\n", ret);
 		
+		}
+		sleep(1);
+
+	        ret = write(fd2, "cd",2);
+
+        	if (ret < 0)
+        	{
+                	printf("write error.\n");
+                	_exit(-1);
+        	}
+       		 else
+       		{
+               		 printf("fd2 write success. write %d chars.\n", ret);
+                
+        	}
+
 	}
 	#endif
 
-	#if 1
+	#if 0
 
 	while (1)
 	{
