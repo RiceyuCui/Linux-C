@@ -7,26 +7,22 @@
 
 int main(void)
 {
-	int fd = -1;
+	int fd1 = -1, fd2 = -1;
+
 	int ret = -1;
-	char writebuf[20] = "IloveLinux";
+	char writebuf[20] = "abcd";
 	char buf[100] = {0};
 	
 	 
-	fd = open("a.txt", O_RDWR);
-	if (fd == -1)
+	fd1 = open("a.txt", O_RDWR);
+	fd2 = open("a.txt", O_RDWR);
+	if( (fd1 == -1) || (fd2 == -1))
 	{
 		perror("file open error");
 		_exit(-1);
 	}
-	else
-	{
-		printf("file open success.\n");
-	}
 	
 	
-	ret = lseek(fd, 3, SEEK_SET);
-	printf("lseek, ret = %d.\n", ret);
 	#if 0
         ret = write(fd, writebuf, strlen(writebuf));
 
@@ -43,21 +39,45 @@ int main(void)
 	#endif
 
 	#if 1
-	ret = read(fd, buf, 20);
+
+	while (1)
+	{
+		memset(buf, 0, sizeof(buf));
+	        ret = read(fd1, buf, 2);
 	
-	if (ret < 0)
-	{
-		printf("read error.\n");
-		_exit(-1);
-	}
-	else
-	{
-		printf("read %d chars.\n", ret);
-		printf("file contett:[ %s ]\n",buf);
+        	if ( (ret < 0) || (ret == 0))
+       		{	
+        	        printf("read error.\n");
+               		 _exit(-1);
+       		 }
+       		 else
+       		 {
+               		 printf("fd1 read %d chars.\n", ret);
+               		 printf("file contett:[ %s ]\n",buf);
+       		 }
+		
+		sleep(1);
+		
+		memset(buf, 0, sizeof(buf));
+                ret = read(fd2, buf, 2);
+
+                if ( (ret < 0) || (ret == 0))
+                {       
+                        printf("read error.\n");
+                         _exit(-1);
+                 }
+                 else
+                 {
+                         printf("fd2 read %d chars.\n", ret);
+                         printf("file contett:[ %s ]\n",buf);
+                 }
+
+               
 	}
 	#endif
 
-	close(fd);
+	close(fd1);
+	close(fd2);
 	return 0;
 	//exit(0);
 }
